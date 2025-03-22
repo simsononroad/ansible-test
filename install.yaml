@@ -1,30 +1,31 @@
-- name: basic_install
+---
+- name: Basic_install
   hosts: ans-test
   remote_user: dani
   become: true
 
-  vars: 
-    home_dir: "/home/dani"
-    venv_dir: "{{ home_dir }}/ansible-test" 
+  vars:
+    home_dir: /home/dani
+    venv_dir: "{{ home_dir }}/ansible-test"
   tasks:
-  - name: install packages
-    ansible.builtin.apt:
-      name: 
-        - python3-psycopg2
-        - mc
-        - python3-venv
-        - python3-setuptools
-        - python3-pip
-        - python3-virtualenv
-        - git
-      state: latest
-  - name: install pip packages
-    ansible.builtin.pip:
-      name:
-        - flask
-      virtualenv: "{{ venv_dir }}"
-      state: latest
-  - name: clone repo
-    ansible.builtin.git:
-      repo: "https://github.com/simsononroad/quick-start.git"
-      dest: "{{ home_dir }}/git_clone"
+    - name: Install packages # noqa: package-latest
+      ansible.builtin.apt:
+        name:
+          - python3-psycopg2
+          - mc
+          - python3-venv
+          - python3-setuptools
+          - python3-pip
+          - python3-virtualenv
+          - git
+        state: latest
+    - name: Install pip packages # noqa: package-latest
+      ansible.builtin.pip:
+        name:
+          - flask
+        virtualenv: "{{ venv_dir }}"
+        state: latest
+    - name: Clone repo # noqa: git-latest
+      ansible.builtin.git:
+        repo: https://github.com/simsononroad/quick-start.git
+        dest: "{{ home_dir }}/git_clone"
